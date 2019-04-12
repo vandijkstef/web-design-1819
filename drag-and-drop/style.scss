@@ -1,0 +1,114 @@
+body {
+	font-family: Ubuntu, sans-serif;
+	// font-weight: lighter;
+	margin: 0;
+	&.infocus {
+		#explain {
+			display: none;
+		}
+	}
+	&:not(.infocus) {
+		#handwrap {
+			display: none;
+		}
+	}
+}
+
+#handwrap {
+	position: absolute;
+	top: 10em;
+	left: 10em;
+	&.pickup {
+		#hand {
+			background-image: url('/pixicons/fist.svg');
+			background-position-y: .2rem;
+			animation: unset;
+			margin-top: 1em;
+		}
+	}
+	#hand {
+		position: relative;
+		top: 0;
+		width: 2em;
+		height: 2em;
+		background-image: url('/pixicons/palm.svg');
+		background-size: contain;
+		background-repeat: no-repeat;
+		transform: rotate(180deg);
+		animation: breathe 3s ease-in-out infinite;
+		transition: margin .2s;	
+	}
+}
+
+#explain {
+	position: absolute;
+    background-color: rgba(255, 255, 255, .6);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+	overflow-y: scroll;
+	article {
+		margin: 0 auto;
+		max-width: 40em;
+	}
+}
+
+#kanban {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	min-height: 100vh;
+	grid-gap: .2rem;
+	> section {
+		display: flex;
+		flex-direction: column;
+		max-height: 100vh;
+		background-color: lightcyan;
+		> * {
+			padding: .4rem;
+		}
+		> header, > footer {
+			background-color: lightblue;
+		}
+		> header {
+			h1 {
+				margin: .4rem 0 0;
+			}
+		}
+		> section {
+			overflow-y: scroll;
+			flex-grow: 1;
+			div {
+				background-color: azure;
+				border-radius: .3rem;
+				padding: .4rem .6rem;
+				margin: 0 0 .2rem;
+				transition: margin .2s;
+				font-weight: 300;
+				&.active {
+					font-weight: 400;
+					&.pickup {
+						margin: 1em 0;
+						font-weight: 500;
+					}
+				}
+			}
+		}
+	}
+}
+
+@keyframes breathe {
+	25% {
+		top: .2rem;
+	}
+	75% {
+		top: -.2rem;
+	}
+}
+
+p {
+	img {
+		display: inline;
+		max-width: 1em;
+	}
+}
