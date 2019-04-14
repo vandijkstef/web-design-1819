@@ -1,5 +1,11 @@
+@font-face {
+  font-family: 'Press Start';
+  src: url("/PressStart2P.ttf") format("truetype");
+}
+
 body {
-  font-family: Ubuntu, sans-serif;
+  font-family: Press Start, sans-serif;
+  line-height: 1.6em;
   margin: 0;
 }
 
@@ -11,10 +17,15 @@ body:not(.infocus) #handwrap {
   display: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 #handwrap {
   position: absolute;
   top: 10em;
   left: 10em;
+  transition: .2s;
 }
 
 #handwrap.pickup #hand {
@@ -39,12 +50,14 @@ body:not(.infocus) #handwrap {
 
 #explain {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.8);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   overflow-y: scroll;
+  display: flex;
+  align-items: center;
 }
 
 #explain article {
@@ -52,9 +65,26 @@ body:not(.infocus) #handwrap {
   max-width: 40em;
 }
 
+#explain ul {
+  padding: 0;
+}
+
+#explain li {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+#explain li img:first-of-type {
+  margin-right: 1rem;
+  position: relative;
+  bottom: -.2rem;
+}
+
 #kanban {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: calc(100vh - 2.2rem) 2rem;
   min-height: 100vh;
   grid-gap: .2rem;
 }
@@ -63,15 +93,16 @@ body:not(.infocus) #handwrap {
   display: flex;
   flex-direction: column;
   max-height: 100vh;
-  background-color: lightcyan;
+  background-color: #ebeef6;
 }
 
 #kanban > section > * {
   padding: .4rem;
 }
 
-#kanban > section > header, #kanban > section > footer {
-  background-color: lightblue;
+#kanban > section > header {
+  background-color: #4c6ab0;
+  color: white;
 }
 
 #kanban > section > header h1 {
@@ -83,7 +114,7 @@ body:not(.infocus) #handwrap {
   flex-grow: 1;
 }
 
-#kanban > section > section div {
+#kanban > section > section .card {
   background-color: azure;
   border-radius: .3rem;
   padding: .4rem .6rem;
@@ -92,13 +123,57 @@ body:not(.infocus) #handwrap {
   font-weight: 300;
 }
 
-#kanban > section > section div.active {
+#kanban > section > section .card.active {
   font-weight: 400;
 }
 
-#kanban > section > section div.active.pickup {
+#kanban > section > section .card.active.pickup {
   margin: 1em 0;
   font-weight: 500;
+}
+
+#kanban > section > section .card.active.pickup .show-detail {
+  height: 3em;
+}
+
+#kanban > section > section .card.active.pickup.edit .show-detail {
+  height: 0;
+}
+
+#kanban > section > section .card.active.pickup.edit .details {
+  height: auto;
+}
+
+#kanban > section > section .card.empty {
+  text-align: center;
+}
+
+#kanban > section > section .card + .empty {
+  display: none;
+}
+
+#kanban > section > section .card .show-detail {
+  font-size: .6em;
+  text-align: center;
+  overflow: hidden;
+  height: 0;
+  transition: height .5s;
+  color: rgba(76, 106, 176, 0.5);
+}
+
+#kanban > section > section .card .details {
+  font-size: .8em;
+  overflow: hidden;
+  height: 0;
+  color: rgba(76, 106, 176, 0.8);
+}
+
+#kanban > footer {
+  grid-column: span 3;
+}
+
+#kanban > footer div {
+  display: inline-block;
 }
 
 @keyframes breathe {
@@ -110,7 +185,18 @@ body:not(.infocus) #handwrap {
   }
 }
 
-p img {
+p img, li img {
   display: inline;
-  max-width: 1em;
+  max-width: 2em;
+}
+
+p .key, li .key {
+  display: inline-block;
+}
+
+.key {
+  background-color: #ebeef6;
+  border: 0.2rem solid #4c6ab0;
+  padding: .1rem .4rem;
+  margin-right: .1rem;
 }

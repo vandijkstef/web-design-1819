@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Drag-nd-Drop</title>
 
-	<script src="/script.js"></script>
+	<script src="/script.js" type="module"></script>
 
 	<link rel="stylesheet" href="/style.css">
 </head>
@@ -18,6 +18,10 @@
 		<article>
 			<h1>Keyboard Kanban</h1>
 			<p>When all mice go for <img src="/pixicons/cheese.svg">, all we have is a keyboard.</p>
+			<ul>
+				<li><img src="/pixicons/pointing_finger.svg">Use <span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> for <span class="key">↑</span><span class="key">↓</span><span class="key">←</span><span class="key">→</span></li>
+				<li><img src="/pixicons/pointing_finger.svg"><span class="key">space</span> for actions</li>
+			</ul>
 		</article>
 	</div>
 	<div id="kanban">
@@ -30,8 +34,8 @@
 				<!-- <div>Get coffee</div>
 				<div>Grab dinner</div>
 				<div>Make this thing</div> -->
+				<!-- <div class="empty">Geen kaarten in kolom</div> -->
 			</section>
-			<footer>Footer</footer>
 		</section>
 	
 		<section>
@@ -43,8 +47,8 @@
 				<div>Move issues</div>
 				<div>Add issues</div>
 				<div>Remove issues</div> -->
+				<!-- <div class="empty">Geen kaarten in kolom</div> -->
 			</section>
-			<footer>Footer</footer>
 		</section>
 	
 		<section>
@@ -54,9 +58,15 @@
 			<section>
 				<!-- <div>Drink coffee</div>
 				<div>Eat lunch</div> -->
+				<!-- <div class="empty">Geen kaarten in kolom</div> -->
 			</section>
-			<footer>Footer</footer>
 		</section>
+
+		<footer>
+			<div class="button">
+				<a href="#create" class="button"><span class="key">C</span>reate card</a>
+			</div>
+		</footer>
 
 	</div>
 </body>
