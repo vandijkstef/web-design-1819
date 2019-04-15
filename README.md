@@ -1,7 +1,7 @@
 # Web Design @cmda-minor-web 1819
 <!-- > Demo: Undefined -->
 
-## Opdracht 1
+## Assignment (1.0)
 Marijn - Design a Drag-and-Drop interface
 How can you optimise a drag and drop interface for a user that can only use his keyboard and has a reduced motor skills?
 
@@ -15,6 +15,19 @@ How can you optimise a drag and drop interface for a user that can only use his 
 The project is running statically from the `drag-and-drop` folder, though an Express/Node based server is included. Start things by using the default `npm install && npm start`.
 
 SCSS compiling isn't done by this server, thus needs to be performed manually.
+
+### User scenarios (1.2.1)
+> Fill this out more
+- User needs to move a card to a different column
+- User needs to create a card
+- User needs to edit/update a card
+- User needs to delete a card
+
+### Exclusive design principals (1.2.2)
+> How am I using them?
+
+### Principals of UI designs (1.3)
+> Name a few, sketch it out
 
 ### Features
 - WASD/Arrow navigation

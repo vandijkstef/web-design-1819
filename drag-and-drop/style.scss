@@ -41,6 +41,13 @@ a {
 			margin-top: 1em;
 		}
 	}
+	&.point {
+		#hand {
+			background-image: url('pixicons/pointing_finger.svg');
+			animation: unset;
+			transform: rotate(90deg);
+		}
+	}
 	#hand {
 		position: relative;
 		top: 0;
@@ -108,52 +115,6 @@ a {
 		> section {
 			overflow-y: scroll;
 			flex-grow: 1;
-			.card {
-				background-color: azure;
-				border-radius: .3rem;
-				padding: .4rem .6rem;
-				margin: 0 0 .2rem;
-				transition: margin .2s;
-				font-weight: 300;
-				&.active {
-					font-weight: 400;
-					&.pickup {
-						margin: 1em 0;
-						font-weight: 500;
-						.show-detail {
-							height: 3em;
-						}
-						&.edit {
-							.show-detail {
-								height: 0;
-							}
-							.details {
-								height: auto;
-							}
-						}
-					}
-				}
-				&.empty {
-					text-align: center;
-				}
-				& + .empty {
-					display: none;
-				}
-				.show-detail {
-					font-size: .6em;
-					text-align: center;
-					overflow: hidden;
-					height: 0;
-					transition: height .5s;
-					color: rgba($maincolor, .5);
-				}
-				.details {
-					font-size: .8em;
-					overflow: hidden;
-					height: 0;
-					color: rgba($maincolor, .8);
-				}
-			}
 		}
 	}
 	> footer {
@@ -188,4 +149,60 @@ p, li {
 	border: .2rem solid $maincolor;
 	padding: .1rem .4rem;
 	margin-right: .1rem;
+}
+
+.card {
+	background-color: azure;
+	border-radius: .3rem;
+	padding: .4rem .6rem;
+	margin: 0 0 .2rem;
+	transition: margin .2s;
+	font-weight: 300;
+	&.active {
+		font-weight: 400;
+		&.pickup {
+			margin: 1em 0;
+			font-weight: 500;
+			.show-detail {
+				height: 3em;
+			}
+			&.edit {
+				.show-detail {
+					height: 0;
+					margin: 0;
+				}
+				& > a {
+					display: none;
+				}
+				.details {
+					height: auto;
+				}
+			}
+		}
+	}
+	&.full {
+		position: absolute;
+		top: 0;
+		left: 0;		
+	}
+	&.empty {
+		text-align: center;
+	}
+	& + .empty {
+		display: none;
+	}
+	.show-detail {
+		font-size: .6em;
+		text-align: center;
+		overflow: hidden;
+		height: 0;
+		transition: height .5s;
+		color: rgba($maincolor, .5);
+	}
+	.details {
+		font-size: .8em;
+		overflow: hidden;
+		height: 0;
+		color: rgba($maincolor, .8);
+	}
 }

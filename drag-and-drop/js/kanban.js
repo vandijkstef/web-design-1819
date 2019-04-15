@@ -26,6 +26,7 @@ export default class Kanban {
 				oskey: e.metaKey,
 				repeat: e.repeat
 			}
+			console.log(keypress);
 			// Ignore OS-created repeats
 			if (keypress.repeat) {
 				return;
@@ -52,10 +53,15 @@ export default class Kanban {
 				case 'e':
 					if (this.active && this.active.classList.contains('pickup')) {
 						this.active.classList.toggle('edit');
+						this.hand.DOM.wrap.classList.toggle('')
 					}
 					break;
 				case 'c':
 					console.log('create card');
+					const newCard = new Card('new');
+					newCard.DOM.classList.add('edit');
+					newCard.DOM.classList.add('full');
+					document.body.appendChild(newCard.DOM);
 					break;
 				case 'x':
 					console.log('erase card');
@@ -246,9 +252,10 @@ export default class Kanban {
 	moveUp() {
 		let newPosX = this.position.x;
 		let newPosY = this.position.y - 1;
-		if (newPosY < 0) {
+		if (newPosY < 0 || this.position.scope == 'footer') {
 			newPosY = 0;
 			if (this.position.scope === 'footer') {
+				console.log('footer up');
 				this.position.scope = 'kanban';
 				newPosY = this.columns[0].cards.length - 1;
 			} else {
@@ -275,7 +282,7 @@ export default class Kanban {
 				this.doMove(newPosX, newPosY);
 			}
 		} else if (this.position.scope === 'footer') {
-			console.log('Footer down');
+			this.doMove(newPosX, 0);
 		}
 	}
 

@@ -35,6 +35,12 @@ a {
   margin-top: 1em;
 }
 
+#handwrap.point #hand {
+  background-image: url("pixicons/pointing_finger.svg");
+  animation: unset;
+  transform: rotate(90deg);
+}
+
 #handwrap #hand {
   position: relative;
   top: 0;
@@ -114,60 +120,6 @@ a {
   flex-grow: 1;
 }
 
-#kanban > section > section .card {
-  background-color: azure;
-  border-radius: .3rem;
-  padding: .4rem .6rem;
-  margin: 0 0 .2rem;
-  transition: margin .2s;
-  font-weight: 300;
-}
-
-#kanban > section > section .card.active {
-  font-weight: 400;
-}
-
-#kanban > section > section .card.active.pickup {
-  margin: 1em 0;
-  font-weight: 500;
-}
-
-#kanban > section > section .card.active.pickup .show-detail {
-  height: 3em;
-}
-
-#kanban > section > section .card.active.pickup.edit .show-detail {
-  height: 0;
-}
-
-#kanban > section > section .card.active.pickup.edit .details {
-  height: auto;
-}
-
-#kanban > section > section .card.empty {
-  text-align: center;
-}
-
-#kanban > section > section .card + .empty {
-  display: none;
-}
-
-#kanban > section > section .card .show-detail {
-  font-size: .6em;
-  text-align: center;
-  overflow: hidden;
-  height: 0;
-  transition: height .5s;
-  color: rgba(76, 106, 176, 0.5);
-}
-
-#kanban > section > section .card .details {
-  font-size: .8em;
-  overflow: hidden;
-  height: 0;
-  color: rgba(76, 106, 176, 0.8);
-}
-
 #kanban > footer {
   grid-column: span 3;
 }
@@ -199,4 +151,69 @@ p .key, li .key {
   border: 0.2rem solid #4c6ab0;
   padding: .1rem .4rem;
   margin-right: .1rem;
+}
+
+.card {
+  background-color: azure;
+  border-radius: .3rem;
+  padding: .4rem .6rem;
+  margin: 0 0 .2rem;
+  transition: margin .2s;
+  font-weight: 300;
+}
+
+.card.active {
+  font-weight: 400;
+}
+
+.card.active.pickup {
+  margin: 1em 0;
+  font-weight: 500;
+}
+
+.card.active.pickup .show-detail {
+  height: 3em;
+}
+
+.card.active.pickup.edit .show-detail {
+  height: 0;
+  margin: 0;
+}
+
+.card.active.pickup.edit > a {
+  display: none;
+}
+
+.card.active.pickup.edit .details {
+  height: auto;
+}
+
+.card.full {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.card.empty {
+  text-align: center;
+}
+
+.card + .empty {
+  display: none;
+}
+
+.card .show-detail {
+  font-size: .6em;
+  text-align: center;
+  overflow: hidden;
+  height: 0;
+  transition: height .5s;
+  color: rgba(76, 106, 176, 0.5);
+}
+
+.card .details {
+  font-size: .8em;
+  overflow: hidden;
+  height: 0;
+  color: rgba(76, 106, 176, 0.8);
 }
