@@ -26,7 +26,6 @@ export default class Kanban {
 				oskey: e.metaKey,
 				repeat: e.repeat
 			}
-			console.log(keypress);
 			// Ignore OS-created repeats
 			if (keypress.repeat) {
 				return;
@@ -96,6 +95,13 @@ export default class Kanban {
 					// 	this.doMove(position.x, position.y);
 					// 	// this.hand.focusOn(document.activeElement.parentElement);
 					// }, 0);
+					break;
+				case 'escape':
+					if (this.active && this.active.classList.contains('pickup')) {
+						this.active.classList.remove('pickup');
+						this.active.classList.remove('edit');
+						this.hand.DOM.wrap.classList.remove('pickup');
+					}
 					break;
 			}
 		});
