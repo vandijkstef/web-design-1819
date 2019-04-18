@@ -51,8 +51,8 @@ export default class Kanban {
 					break;
 				case 'e':
 					if (this.active && this.active.classList.contains('pickup')) {
-						this.active.classList.toggle('edit');
-						this.hand.DOM.wrap.classList.toggle('')
+						this.active.classList.toggle('full');
+						// this.hand.DOM.wrap.classList.toggle('')
 					}
 					break;
 				case 'c':

@@ -33,6 +33,7 @@ a {
 	top: 10em;
 	left: 10em;
 	transition: .2s;
+	z-index: 99;
 	&.pickup {
 		#hand {
 			background-image: url('/pixicons/fist.svg');
@@ -152,38 +153,72 @@ p, li {
 }
 
 .card {
-	background-color: azure;
-	border-radius: .3rem;
+	background-color: lighten($maincolor, 20);
+	border-radius: 0 .3rem .3rem .3rem;
 	padding: .4rem .6rem;
-	margin: 0 0 .2rem;
+	margin: 1.4em 0 .2rem;
 	transition: margin .2s;
 	font-weight: 300;
+	position: relative;
+	&::before {
+		content: ' ';
+		position: absolute;
+		top: -1em;
+		left: 0;
+		height: 1em;
+		width: 8em;
+		border-radius: .3rem .3rem 0 0;
+		background-color: lighten($maincolor, 15);
+	}
 	&.active {
 		font-weight: 400;
 		&.pickup {
-			margin: 1em 0;
+			margin: 2.4em 0;
 			font-weight: 500;
+			& > a {
+				bottom: 0;
+			}
 			.show-detail {
-				height: 3em;
+				opacity: 1;
 			}
-			&.edit {
-				.show-detail {
-					height: 0;
-					margin: 0;
-				}
-				& > a {
-					display: none;
-				}
-				.details {
-					height: auto;
-				}
-			}
+			// &.edit {
+			// 	.show-detail {
+			// 		height: 0;
+			// 		margin: 0;
+			// 	}
+			// 	& > a {
+			// 		display: none;
+			// 	}
+			// 	.details {
+			// 		height: auto;
+			// 	}
+			// }
 		}
 	}
 	&.full {
 		position: absolute;
 		top: 0;
-		left: 0;		
+		bottom: 0;
+		left: 0;
+		right: 0;
+		max-width: 50em;
+		width: 100%;
+		min-height: 50vh;
+		z-index: 50;
+		left: 50%;
+		top: 8vh;
+		transform: translate(-50%, 0);
+		overflow-y: scroll;
+		// &::before {
+		// 	content: ' ';
+		// 	position: absolute;
+		// 	background-color: rgba(0, 0, 0, .6);
+		// 	top: 0;
+		// 	bottom: 0;
+		// 	left: 0;
+		// 	right: 0;
+		// 	z-index: 45;
+		// }
 	}
 	&.empty {
 		text-align: center;
@@ -192,17 +227,24 @@ p, li {
 		display: none;
 	}
 	.show-detail {
+		opacity: 0;
 		font-size: .6em;
 		text-align: center;
 		overflow: hidden;
-		height: 0;
-		transition: height .5s;
-		color: rgba($maincolor, .5);
+		transition: opacity .5s;
+		color: rgba($maincolor, .7);
+		margin: 0;
 	}
 	.details {
 		font-size: .8em;
 		overflow: hidden;
 		height: 0;
 		color: rgba($maincolor, .8);
+	}
+	& > a {
+		transition: bottom .2s;
+		position: relative;
+		bottom: -.7em;
+		color: $contrastcolor;
 	}
 }

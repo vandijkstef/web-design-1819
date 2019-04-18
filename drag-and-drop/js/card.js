@@ -22,7 +22,7 @@ export default class Card {
 
 		return UI.Wrap([
 			UI.CreateLink(this.label, `#card-${this.id}`),
-			UI.CreateText('Press E to edit', ['show-detail']),
+			UI.CreateText('Press E to open', ['show-detail']),
 			UI.CreateForm([
 				UI.CreateInputText(
 					UI.CreateLabel('Name'),
