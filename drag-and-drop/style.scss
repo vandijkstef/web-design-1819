@@ -57,7 +57,7 @@ a {
 			background-image: url('/pixicons/fist.svg');
 			background-position-y: .2rem;
 			animation: unset;
-			margin-top: 1em;
+			// margin-top: 1em;
 		}
 	}
 	&.point {
@@ -191,8 +191,10 @@ p, li {
 	&.active {
 		font-weight: 400;
 		&.pickup {
-			// margin: 2.4em 0;
 			font-weight: 500;
+			&::before {
+				background-color: $maincolor;
+			}
 			& > a {
 				bottom: 0;
 			}

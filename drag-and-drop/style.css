@@ -51,7 +51,6 @@ a {
   background-image: url("/pixicons/fist.svg");
   background-position-y: .2rem;
   animation: unset;
-  margin-top: 1em;
 }
 
 #handwrap.point #hand {
@@ -199,6 +198,10 @@ p .key, li .key {
 
 .card.active.pickup {
   font-weight: 500;
+}
+
+.card.active.pickup::before {
+  background-color: #4c6ab0;
 }
 
 .card.active.pickup > a {
