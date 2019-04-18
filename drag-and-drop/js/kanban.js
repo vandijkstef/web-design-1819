@@ -51,7 +51,29 @@ export default class Kanban {
 					break;
 				case 'e':
 					if (this.active && this.active.classList.contains('pickup')) {
-						this.active.classList.toggle('full');
+						const pos = this.active.getBoundingClientRect();
+						if (!this.active.classList.contains('full')) {
+							this.active.classList.add('full');
+							this.active.style.top = pos.y + 'px';
+							this.active.style.left = pos.x + 'px';
+							setTimeout(() => {
+								document.body.classList.add('solo');
+								this.active.classList.add('edit');
+								this.active.style.top = '5vh';
+								this.active.style.bottom = '5vh';
+								this.active.style.left = '5vw';
+								this.active.style.right = '5vw';
+							}, 0);
+						} else {
+							document.body.classList.remove('solo');
+							this.active.classList.remove('full');
+							this.active.classList.remove('edit');
+							this.active.style.top = 'unset';
+							this.active.style.bottom = 'unset';
+							this.active.style.left = 'unset';
+							this.active.style.right = 'unset';
+						}
+
 						// this.hand.DOM.wrap.classList.toggle('')
 					}
 					break;

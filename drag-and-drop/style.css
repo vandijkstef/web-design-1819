@@ -17,6 +17,24 @@ body:not(.infocus) #handwrap {
   display: none;
 }
 
+body::after {
+  content: ' ';
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+body.solo::after {
+  opacity: 1;
+  transition: opacity .4s;
+}
+
 a {
   text-decoration: none;
 }
@@ -159,7 +177,7 @@ p .key, li .key {
   border-radius: 0 .3rem .3rem .3rem;
   padding: .4rem .6rem;
   margin: 1.4em 0 .2rem;
-  transition: margin .2s;
+  transition: .4s;
   font-weight: 300;
   position: relative;
 }
@@ -180,7 +198,6 @@ p .key, li .key {
 }
 
 .card.active.pickup {
-  margin: 2.4em 0;
   font-weight: 500;
 }
 
@@ -188,24 +205,41 @@ p .key, li .key {
   bottom: 0;
 }
 
+.card.active.pickup.full {
+  margin: 0;
+}
+
+.card.active.pickup.full + .card {
+  margin-top: 6em;
+}
+
 .card.active.pickup .show-detail {
   opacity: 1;
 }
 
+.card.active.pickup.edit .show-detail {
+  height: 0;
+  margin: 0;
+}
+
+.card.active.pickup.edit .details {
+  height: auto;
+}
+
 .card.full {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  z-index: 70;
+}
+
+.card.full::before {
+  content: ' ';
+  position: absolute;
+  top: -1.8em;
   left: 0;
-  right: 0;
-  max-width: 50em;
-  width: 100%;
-  min-height: 50vh;
-  z-index: 50;
-  left: 50%;
-  top: 8vh;
-  transform: translate(-50%, 0);
-  overflow-y: scroll;
+  height: 1.8em;
+  width: 14em;
+  border-radius: .3rem .3rem 0 0;
+  background-color: #8096c8;
 }
 
 .card.empty {

@@ -22,6 +22,24 @@ body {
 			display: none;
 		}
 	}
+	&::after {
+		content: ' '; 
+		position: absolute;
+		background-color: rgba(0, 0, 0, .6);
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 45;
+		opacity: 0;
+		transition: opacity .3s;
+	}
+	&.solo {
+		&::after {
+			opacity: 1;
+			transition: opacity .4s;
+		}
+	}
 }
 
 a {
@@ -157,7 +175,7 @@ p, li {
 	border-radius: 0 .3rem .3rem .3rem;
 	padding: .4rem .6rem;
 	margin: 1.4em 0 .2rem;
-	transition: margin .2s;
+	transition: .4s;
 	font-weight: 300;
 	position: relative;
 	&::before {
@@ -173,51 +191,62 @@ p, li {
 	&.active {
 		font-weight: 400;
 		&.pickup {
-			margin: 2.4em 0;
+			// margin: 2.4em 0;
 			font-weight: 500;
 			& > a {
 				bottom: 0;
 			}
+			&.full {
+				margin: 0;
+				+ .card {
+					margin-top: 6em;
+				}
+			}
 			.show-detail {
 				opacity: 1;
 			}
-			// &.edit {
-			// 	.show-detail {
-			// 		height: 0;
-			// 		margin: 0;
-			// 	}
-			// 	& > a {
-			// 		display: none;
-			// 	}
-			// 	.details {
-			// 		height: auto;
-			// 	}
-			// }
+			&.edit {
+				.show-detail {
+					height: 0;
+					margin: 0;
+				}
+				// & > a {
+				// 	display: none;
+				// }
+				.details {
+					height: auto;
+				}
+			}
 		}
 	}
 	&.full {
 		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		max-width: 50em;
-		width: 100%;
-		min-height: 50vh;
-		z-index: 50;
-		left: 50%;
-		top: 8vh;
-		transform: translate(-50%, 0);
-		overflow-y: scroll;
+		z-index: 70;
+		&::before {
+			content: ' ';
+			position: absolute;
+			top: -1.8em;
+			left: 0;
+			height: 1.8em;
+			width: 14em;
+			border-radius: .3rem .3rem 0 0;
+			background-color: lighten($maincolor, 15);
+		}
+		// top: 0;
+		// bottom: 0;
+		// left: 0;
+		// right: 0;
+		// max-width: 50em;
+		// width: 100%;
+		// min-height: 50vh;
+		// z-index: 50;
+		// left: 50%;
+		// top: 8vh;
+		// transform: translate(-50%, 0);
+		// overflow-y: scroll;
 		// &::before {
 		// 	content: ' ';
-		// 	position: absolute;
-		// 	background-color: rgba(0, 0, 0, .6);
-		// 	top: 0;
-		// 	bottom: 0;
-		// 	left: 0;
-		// 	right: 0;
-		// 	z-index: 45;
+		// 	
 		// }
 	}
 	&.empty {
