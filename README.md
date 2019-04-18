@@ -89,7 +89,19 @@ Other:
 	- Set favorites (on numbers?)
 	- Controller support?
 
-
+- Editing
+	- Fields
+		- Title
+		- Label color (priority)
+			- Radio buttons like slider
+		- Icon (Label)
+			- Slider-like thingy
+		- State (column)
+			- Select-like input
+	- Hand
+	- Saving/Updating
+	- New
+- Rework explain
 
 
 ☕
