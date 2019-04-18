@@ -242,9 +242,13 @@ p, li {
 		color: rgba($maincolor, .8);
 	}
 	& > a {
-		transition: bottom .2s;
 		position: relative;
 		bottom: -.7em;
 		color: $contrastcolor;
+		transition: .2s;
+		&:focus {
+			outline: none;
+			color: $maincolor;
+		}
 	}
 }

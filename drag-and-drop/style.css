@@ -234,8 +234,13 @@ p .key, li .key {
 }
 
 .card > a {
-  transition: bottom .2s;
   position: relative;
   bottom: -.7em;
   color: white;
+  transition: .2s;
+}
+
+.card > a:focus {
+  outline: none;
+  color: #4c6ab0;
 }
