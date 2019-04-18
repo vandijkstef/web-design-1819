@@ -56,14 +56,14 @@ export default class Kanban {
 							this.active.classList.add('full');
 							this.active.style.top = pos.y + 'px';
 							this.active.style.left = pos.x + 'px';
-							setTimeout(() => {
+							requestAnimationFrame(() => {
 								document.body.classList.add('solo');
 								this.active.classList.add('edit');
 								this.active.style.top = '5vh';
 								this.active.style.bottom = '5vh';
 								this.active.style.left = '5vw';
 								this.active.style.right = '5vw';
-							}, 0);
+							});
 						} else {
 							document.body.classList.remove('solo');
 							this.active.classList.remove('full');
@@ -107,23 +107,15 @@ export default class Kanban {
 					}
 					break;
 				case 'tab':
-					// const curData = document.activeElement.parentElement.dataset;
-					// setTimeout(() => {
-					// 	const data = document.activeElement.parentElement.dataset;
-					// 	const position = {
-					// 		x: data.x,
-					// 		y: data.y
-					// 	}
-					// 	this.doMove(position.x, position.y);
-					// 	// this.hand.focusOn(document.activeElement.parentElement);
-					// }, 0);
+					// TODO: Decide tab key use?
 					break;
 				case 'escape':
-					if (this.active && this.active.classList.contains('pickup')) {
-						this.active.classList.remove('pickup');
-						this.active.classList.remove('edit');
-						this.hand.DOM.wrap.classList.remove('pickup');
-					}
+					// TODO: Redo escape
+					// if (this.active && this.active.classList.contains('pickup')) {
+					// 	this.active.classList.remove('pickup');
+					// 	this.active.classList.remove('edit');
+					// 	this.hand.DOM.wrap.classList.remove('pickup');
+					// }
 					break;
 			}
 		});
