@@ -9,11 +9,19 @@ body {
   margin: 0;
 }
 
-body.infocus #explain {
+body.infocus:not(.unexplained) #explain {
   display: none;
 }
 
-body:not(.infocus) #handwrap {
+body:not(.infocus) #handwrap, body.unexplained #handwrap {
+  display: none;
+}
+
+body:not(.infocus) #explain .first {
+  display: none;
+}
+
+body.unexplained #explain .focus {
   display: none;
 }
 
@@ -27,12 +35,14 @@ body::after {
   right: 0;
   z-index: 45;
   opacity: 0;
+  -webkit-transition: opacity .3s;
   transition: opacity .3s;
   pointer-events: none;
 }
 
 body.solo::after {
   opacity: 1;
+  -webkit-transition: opacity .4s;
   transition: opacity .4s;
   pointer-events: all;
 }
@@ -45,6 +55,7 @@ a {
   position: absolute;
   top: 10em;
   left: 10em;
+  -webkit-transition: .2s;
   transition: .2s;
   z-index: 99;
 }
@@ -52,13 +63,16 @@ a {
 #handwrap.pickup #hand {
   background-image: url("/pixicons/fist.svg");
   background-position-y: .2rem;
-  animation: unset;
+  -webkit-animation: unset;
+          animation: unset;
 }
 
 #handwrap.point #hand {
   background-image: url("pixicons/pointing_finger.svg");
-  animation: unset;
-  transform: rotate(90deg);
+  -webkit-animation: unset;
+          animation: unset;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
 }
 
 #handwrap #hand {
@@ -69,8 +83,11 @@ a {
   background-image: url("/pixicons/palm.svg");
   background-size: contain;
   background-repeat: no-repeat;
-  transform: rotate(180deg);
-  animation: breathe 3s ease-in-out infinite;
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+  -webkit-animation: breathe 3s ease-in-out infinite;
+          animation: breathe 3s ease-in-out infinite;
+  -webkit-transition: margin .2s;
   transition: margin .2s;
 }
 
@@ -81,9 +98,14 @@ a {
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 10;
   overflow-y: scroll;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #explain article {
@@ -107,17 +129,31 @@ a {
   bottom: -.2rem;
 }
 
+#explain .focus {
+  background-color: #4c6ab0;
+  padding: .6rem;
+  color: white;
+}
+
 #kanban {
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: calc(100vh - 2.2rem) 2rem;
-  min-height: 100vh;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  -ms-grid-rows: calc(100vh - 2.8rem) 2rem;
+      grid-template-rows: calc(100vh - 2.8rem) 2rem;
+  height: 100vh;
   grid-gap: .2rem;
 }
 
 #kanban > section {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   max-height: 100vh;
   background-color: #ebeef6;
 }
@@ -137,7 +173,9 @@ a {
 
 #kanban > section > section {
   overflow-y: scroll;
-  flex-grow: 1;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 
 #kanban > footer {
@@ -146,6 +184,15 @@ a {
 
 #kanban > footer div {
   display: inline-block;
+}
+
+@-webkit-keyframes breathe {
+  25% {
+    top: .2rem;
+  }
+  75% {
+    top: -.2rem;
+  }
 }
 
 @keyframes breathe {
@@ -166,6 +213,28 @@ p .key, li .key {
   display: inline-block;
 }
 
+.visuallyhidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.visuallyhidden.focusable:focus-within {
+  position: initial;
+  overflow: initial;
+  clip: initial;
+  height: initial;
+  width: initial;
+  margin: initial;
+  padding: initial;
+  border: initial;
+}
+
 .key {
   background-color: #ebeef6;
   border: 0.2rem solid #4c6ab0;
@@ -178,6 +247,7 @@ p .key, li .key {
   border-radius: 0 .3rem .3rem .3rem;
   padding: .4rem .6rem;
   margin: 1.4em 0 .2rem;
+  -webkit-transition: .4s;
   transition: .4s;
   font-weight: 300;
   position: relative;
@@ -227,6 +297,10 @@ p .key, li .key {
   margin: 0;
 }
 
+.card.active.pickup.edit > a {
+  display: none;
+}
+
 .card.active.pickup.edit .details {
   height: auto;
 }
@@ -247,6 +321,10 @@ p .key, li .key {
   background-color: #8096c8;
 }
 
+.card.full form {
+  margin-top: 2rem;
+}
+
 .card.empty {
   text-align: center;
 }
@@ -260,6 +338,7 @@ p .key, li .key {
   font-size: .6em;
   text-align: center;
   overflow: hidden;
+  -webkit-transition: opacity .5s;
   transition: opacity .5s;
   color: rgba(76, 106, 176, 0.7);
   margin: 0;
@@ -276,6 +355,7 @@ p .key, li .key {
   position: relative;
   bottom: -.7em;
   color: white;
+  -webkit-transition: .2s;
   transition: .2s;
 }
 
@@ -283,3 +363,79 @@ p .key, li .key {
   outline: none;
   color: #4c6ab0;
 }
+
+.card form {
+  max-width: 40em;
+  margin: 0 auto;
+}
+
+label {
+  padding: 1rem;
+  font-weight: normal;
+  display: block;
+  font-size: 1.2em;
+  background-color: white;
+  cursor: pointer;
+}
+
+input:not([type=submit]), textarea, select {
+  margin-top: .5em;
+  padding: 0.5em .6em;
+  font-size: 1.4em;
+  border: 0.13rem solid white;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: .2rem;
+  max-width: 20em;
+  display: block;
+  margin-bottom: 1em;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea:not([type=checkbox]):not([type=radio]), select:not([type=checkbox]):not([type=radio]) {
+  width: 100%;
+}
+
+input:not([type=submit]).missing, textarea.missing, select.missing {
+  border: 1px solid red;
+}
+
+input:not([type=submit]):invalid, textarea:invalid, select:invalid {
+  border-color: red;
+  background-color: rgba(255, 0, 0, 0.05);
+}
+
+input:not([type=submit]):placeholder-shown, textarea:placeholder-shown, select:placeholder-shown {
+  border-color: rgba(76, 106, 176, 0.1);
+  background-color: rgba(76, 106, 176, 0.05);
+}
+
+input:not([type=submit]):placeholder-shown:required, textarea:placeholder-shown:required, select:placeholder-shown:required {
+  border-color: #4c6ab0;
+}
+
+input:not([type=submit]):valid:not(:placeholder-shown):not(select), textarea:valid:not(:placeholder-shown):not(select), select:valid:not(:placeholder-shown):not(select) {
+  border-color: green;
+  background-color: rgba(0, 128, 0, 0.05);
+}
+
+input[type=radio], input[type=checkbox] {
+  display: inline;
+  margin: 0 1rem 0 0;
+}
+
+input[type=radio] + label, input[type=checkbox] + label {
+  display: inline;
+}
+
+textarea {
+  min-height: 8em;
+}
+
+input[type=submit] {
+  background-color: white;
+  color: #4c6ab0;
+  padding: .4rem .6rem;
+  text-align: right;
+  font-size: 1.6em;
+}
+/*# sourceMappingURL=style.css.map */

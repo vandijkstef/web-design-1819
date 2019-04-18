@@ -11,7 +11,7 @@ export default class Kanban {
 		this.hand = new Hand();
 
 		this.position = {
-			scope: 'footer',
+			scope: 'kanban',
 			x: 0, 
 			y: 0
 		}
@@ -27,8 +27,14 @@ export default class Kanban {
 				repeat: e.repeat
 			}
 			// Ignore OS-created repeats
-			if (keypress.repeat) {
+			if (keypress.repeat || document.body.classList.contains('unexplained') && keypress.key != ' ') {
 				return;
+			}
+
+			if (document.body.classList.contains('unexplained') && keypress.key == ' ') {
+				document.body.classList.remove('unexplained');
+				console.log('explainish');
+				return
 			}
 
 			// Handle it!
@@ -54,6 +60,7 @@ export default class Kanban {
 						const pos = this.active.getBoundingClientRect();
 						if (!this.active.classList.contains('full')) {
 							this.active.classList.add('full');
+							this.position.scope = 'solo';
 							this.active.style.top = pos.y + 'px';
 							this.active.style.left = pos.x + 'px';
 							requestAnimationFrame(() => {
@@ -68,14 +75,14 @@ export default class Kanban {
 							document.body.classList.remove('solo');
 							this.active.classList.remove('full');
 							this.active.classList.remove('edit');
+							this.position.scope = 'kanban';
 							this.active.style.top = 'unset';
 							this.active.style.bottom = 'unset';
 							this.active.style.left = 'unset';
 							this.active.style.right = 'unset';
 						}
-
-						// this.hand.DOM.wrap.classList.toggle('')
 					}
+					console.log(this.position);
 					break;
 				case 'c':
 					console.log('create card');
