@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	new Kanban('#kanban', workData);
 
-	const focusWatcher = false;
+	const focusWatcher = true;
 
 	document.body.classList.add('infocus');
 	if (focusWatcher) {
