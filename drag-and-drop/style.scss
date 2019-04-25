@@ -379,6 +379,13 @@ p, li {
 		max-width: 40em;
 		margin: 0 auto;
 	}
+	.hotkey {
+		position: absolute;
+		right: 1em;
+		top: .3em;
+		color: $maincolor;
+		opacity: .8;
+	}
 }
 
 label {

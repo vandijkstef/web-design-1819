@@ -85,8 +85,8 @@ a {
 }
 
 #handwrap.writing #control::after {
-  content: '^+A';
-  left: -.8em;
+  content: 'ALT+A';
+  left: -3em;
 }
 
 #handwrap.working #hand {
@@ -382,6 +382,14 @@ p .key, li .key {
 .card form {
   max-width: 40em;
   margin: 0 auto;
+}
+
+.card .hotkey {
+  position: absolute;
+  right: 1em;
+  top: .3em;
+  color: #4c6ab0;
+  opacity: .8;
 }
 
 label {
