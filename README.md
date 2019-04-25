@@ -102,5 +102,8 @@ Other:
 	- Saving/Updating
 	- New
 
+- Actually store/apply changes
+- Create new card!
+
 
 ☕
