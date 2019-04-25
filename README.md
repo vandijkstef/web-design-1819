@@ -101,7 +101,6 @@ Other:
 	- Hand
 	- Saving/Updating
 	- New
-- Rework explain
 
 
 ☕
