@@ -7,18 +7,34 @@ $inputcolor: #6ab04c;
 $maincolor: adjust-hue($inputcolor, 120);
 $mainLight: lighten($maincolor, 45);
 $contrastcolor: white;
+$error: red;
+$confirm: green;
+$textcolor: black;
 
 body {
 	font-family: Press Start, sans-serif;
 	line-height: 1.6em;
 	margin: 0;
-	&.infocus {
+	// padding-bottom: 2em;
+	&.infocus:not(.unexplained) {	
 		#explain {
 			display: none;
 		}
 	}
-	&:not(.infocus) {
+	&:not(.infocus), &.unexplained {
 		#handwrap {
+			display: none;
+		}
+	}
+	&:not(.infocus) {
+		#explain {
+			.first {
+				display: none;
+			}
+		}
+	}
+	&.unexplained {
+		#explain .focus {
 			display: none;
 		}
 	}
@@ -33,11 +49,13 @@ body {
 		z-index: 45;
 		opacity: 0;
 		transition: opacity .3s;
+		pointer-events: none;
 	}
 	&.solo {
 		&::after {
 			opacity: 1;
 			transition: opacity .4s;
+			pointer-events: all;
 		}
 	}
 }
@@ -64,20 +82,70 @@ a {
 		#hand {
 			background-image: url('pixicons/pointing_finger.svg');
 			animation: unset;
-			transform: rotate(90deg);
+			transform: rotate(0);
 		}
 	}
-	#hand {
+	&.forbidden {
+		#forbidden {
+			opacity: 1;
+			transition: opacity 0;
+		}
+	}
+	&.edit {
+		#control {
+			display: block;
+			opacity: .8;
+			color: $maincolor;
+		}
+	}
+	&.writing {
+		#hand {
+			background-image: url('/pixicons/hourglass.svg');
+		}
+		#control {
+			&::after {
+				content: 'ALT+A';
+				left: -3em;
+			}
+		}
+	}
+	&.working {
+		#hand {
+			background-image: url('/pixicons/stars.svg');
+		}
+	}
+	#hand, #forbidden {
 		position: relative;
 		top: 0;
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+	#hand {
 		width: 2em;
 		height: 2em;
 		background-image: url('/pixicons/palm.svg');
-		background-size: contain;
-		background-repeat: no-repeat;
 		transform: rotate(180deg);
 		animation: breathe 3s ease-in-out infinite;
 		transition: margin .2s;	
+	}
+	#forbidden {
+		background-image: url('/pixicons/forbidden.svg');
+		width: 1.6em;
+		height: 1.6em;
+		top: -.6em;
+		left: .2em;
+		opacity: 0;
+		transition: opacity .2s;
+	}
+	#control {
+		top: .6em;
+		display: none;
+		position: relative;
+		&::after {
+			position: relative;
+			text-align: right;
+			content: 'D';
+		}
 	}
 }
 
@@ -87,7 +155,8 @@ a {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+	bottom: 0;
+	z-index: 10;
 	overflow-y: scroll;
 	display: flex;
 	align-items: center;
@@ -108,13 +177,18 @@ a {
 			bottom: -.2rem;
 		}
 	}
+	.focus {
+		background-color: $maincolor;
+		padding: .6rem;
+		color: $contrastcolor;
+	}
 }
 
 #kanban {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-rows: calc(100vh - 2.2rem) 2rem;
-	min-height: 100vh;
+	grid-template-rows: 100vh;
+	height: 100vh;
 	grid-gap: .2rem;
 	> section {
 		display: flex;
@@ -163,6 +237,21 @@ p, li {
 	}
 }
 
+.visuallyhidden {
+	position: absolute; 
+	overflow: hidden; 
+	clip: rect(0 0 0 0); 
+	height: 1px; width: 1px; 
+	margin: -1px; padding: 0; border: 0;
+	&.focusable:focus-within {
+		position: initial; 
+		overflow: initial; 
+		clip: initial; 
+		height: initial; width: initial; 
+		margin: initial; padding: initial; border: initial;
+	}
+}
+
 .key {
 	background-color: $mainLight;
 	border: .2rem solid $maincolor;
@@ -197,6 +286,7 @@ p, li {
 			}
 			& > a {
 				bottom: 0;
+				color: $maincolor;
 			}
 			&.full {
 				margin: 0;
@@ -212,9 +302,9 @@ p, li {
 					height: 0;
 					margin: 0;
 				}
-				// & > a {
-				// 	display: none;
-				// }
+				& > a {
+					display: none;
+				}
 				.details {
 					height: auto;
 				}
@@ -250,6 +340,9 @@ p, li {
 		// 	content: ' ';
 		// 	
 		// }
+		form {
+			margin-top: 2rem;
+		}
 	}
 	&.empty {
 		text-align: center;
@@ -282,4 +375,71 @@ p, li {
 			color: $maincolor;
 		}
 	}
+	form {
+		max-width: 40em;
+		margin: 0 auto;
+	}
+}
+
+label {
+	// font-family: $textfont;
+	padding: 1rem;
+	font-weight: normal;
+	display: block;
+	font-size: 1.2em;
+	background-color: $contrastcolor;
+	cursor: pointer;
+}
+input:not([type=submit]), textarea, select {
+	margin-top: .5em;
+	padding: 0.5em .6em;
+	font-size: 1.4em;
+	border: .13rem solid $contrastcolor;
+	background-color: rgba($contrastcolor, .05);
+	border-radius: .2rem;
+	max-width: 20em;
+	display: block;
+	margin-bottom: 1em;
+	color: rgba($textcolor, .7);
+	&:not([type=checkbox]):not([type=radio]) {
+		width: 100%;
+	}
+	&.missing {
+		border: 1px solid $error;
+	}
+	&:invalid {
+		border-color: $error;
+		background-color: rgba($error, .05);
+	}
+	&:placeholder-shown {
+		border-color: rgba($maincolor, .1);
+		background-color: rgba($maincolor, .05);
+		&:required {
+			border-color: $maincolor;
+		}
+	}
+	&:valid:not(:placeholder-shown):not(select) {
+		border-color: $confirm;
+		background-color: rgba($confirm, .05);
+	}
+}
+input[type=radio], input[type=checkbox] {
+	display: inline;
+	margin: 0 1rem 0 0;
+	// TODO: Radio buttons
+	+ label {
+		display: inline;
+	}
+}
+textarea {
+	min-height: 8em;
+}
+
+input[type=submit] {
+	display: none;
+	// background-color: $contrastcolor;
+	// color: $maincolor;
+	// padding: .4rem .6rem;
+	// text-align: right;
+	// font-size: 1.6em;
 }

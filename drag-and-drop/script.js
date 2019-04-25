@@ -54,11 +54,19 @@ const data = {
 
 document.addEventListener('DOMContentLoaded', () => {
 	new Kanban('#kanban', data);
+
+	const focusWatcher = false;
+
 	document.body.classList.add('infocus');
-	window.onfocus = () => {
-		document.body.classList.add('infocus');
-	};
-	window.onblur = () => {
-		document.body.classList.remove('infocus');
-	};
+	if (focusWatcher) {
+		window.onfocus = () => {
+			document.body.classList.add('infocus');
+		};
+		window.onblur = () => {
+			document.body.classList.remove('infocus');
+		};
+	} else {
+		document.body.classList.remove('unexplained');
+		document.querySelector('#explain').parentElement.removeChild(document.querySelector('#explain'));
+	}
 });
