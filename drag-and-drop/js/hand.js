@@ -6,6 +6,8 @@ export default class Hand {
 			hand: document.querySelector('#hand'),
 			forbidden: document.querySelector('#forbidden')
 		}
+
+		this.focusing = undefined;
 	}
 
 	focusOn(element, position) {
@@ -21,6 +23,7 @@ export default class Hand {
 				this.DOM.wrap.classList.add('edit');
 				this.DOM.wrap.style.top = Math.floor(posData.y + 15) + 'px';
 				this.DOM.wrap.style.left = Math.floor(posData.left - 40) + 'px';
+				this.focusing = element;
 			} else {
 				console.warn('Cant move hand');
 			}
@@ -28,6 +31,7 @@ export default class Hand {
 			this.DOM.wrap.classList.remove('point');
 			this.DOM.wrap.style.top = Math.floor(posData.y - 15) + 'px';
 			this.DOM.wrap.style.left = Math.floor(posData.right - 40) + 'px';
+			this.focusing = element;
 		}
 		// console.log(posData, this.DOM.wrap);
 	}
