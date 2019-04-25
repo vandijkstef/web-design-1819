@@ -8,18 +8,20 @@ export default class Card {
 			this._ = {
 				id: -1,
 				label: 'new',
-				category: 0
+				category: 0,
+				description: '',
 			};
 		}
 		
 		this.id = this._.id;
 		this.label = this._.label;
+		this.description = this._.description;
 		this.DOM = this.Create();
 	}
 
 	Create() {
 		const UI = new UITools();
-
+		console.log(this);
 		return UI.Wrap([
 			UI.CreateLink(this.label, `#card-${this.id}`),
 			UI.CreateText('E to open | X to remove', ['show-detail']),
@@ -27,16 +29,16 @@ export default class Card {
 				// UI.CreateText('ESC or E to close'),
 				UI.CreateInputText(
 					UI.CreateLabel('Name'),
-					'name',
+					'label',
 					'text',
 					true,
 					this.label
 				),
 				UI.CreateInputText(
 					UI.CreateLabel('Description'),
-					'name',
+					'description',
 					'text',
-					true,
+					false,
 					this.description
 				),
 			], '/', 'POST', ['details'], null)

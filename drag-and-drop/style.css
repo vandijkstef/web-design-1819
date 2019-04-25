@@ -85,8 +85,8 @@ a {
 }
 
 #handwrap.writing #control::after {
-  content: 'ALT+A';
-  left: -3em;
+  content: '^+A';
+  left: -.8em;
 }
 
 #handwrap.working #hand {
