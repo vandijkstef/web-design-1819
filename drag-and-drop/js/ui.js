@@ -19,7 +19,8 @@ export default class UITools {
     }
     CreateLink(text, path, classes, id) {
         const element = this.CreateText(text, classes, id, 'a');
-        element.href = path;
+		element.href = path;
+		element.tabIndex = '-1';
         return element;
     }
     CreateImage(src, title, classes, id) {
@@ -97,7 +98,8 @@ export default class UITools {
             return input;
         }
         input.required = required;
-        input.placeholder = placeholder;
+		input.placeholder = placeholder;
+		input.tabIndex = '-1';
         return input;
     }
     // CreateInputSet()
