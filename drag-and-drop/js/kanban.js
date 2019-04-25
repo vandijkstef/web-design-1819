@@ -97,6 +97,7 @@ export default class Kanban {
 
 							if (input.name === 'hotkey') {
 								this.active.querySelector('.hotkey').innerText = input.value;
+								this.active.dataset.hotkey = input.value;
 							}
 
 							localStorage.setItem('kanbandata', JSON.stringify(data));
