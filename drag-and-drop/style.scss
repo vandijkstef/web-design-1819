@@ -82,20 +82,65 @@ a {
 		#hand {
 			background-image: url('pixicons/pointing_finger.svg');
 			animation: unset;
-			transform: rotate(90deg);
+			transform: rotate(0);
 		}
 	}
-	#hand {
+	&.forbidden {
+		#forbidden {
+			opacity: 1;
+			transition: opacity 0;
+		}
+	}
+	&.edit {
+		#control {
+			display: block;
+			opacity: .8;
+			color: $maincolor;
+		}
+	}
+	&.writing {
+		#hand {
+			background-image: url('/pixicons/hourglass.svg');
+		}
+		#control {
+			&::after {
+				content: 'ALT+A';
+				left: -3em;
+			}
+		}
+	}
+	#hand, #forbidden {
 		position: relative;
 		top: 0;
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+	#hand {
 		width: 2em;
 		height: 2em;
 		background-image: url('/pixicons/palm.svg');
-		background-size: contain;
-		background-repeat: no-repeat;
 		transform: rotate(180deg);
 		animation: breathe 3s ease-in-out infinite;
 		transition: margin .2s;	
+	}
+	#forbidden {
+		background-image: url('/pixicons/forbidden.svg');
+		width: 1.6em;
+		height: 1.6em;
+		top: -.6em;
+		left: .2em;
+		opacity: 0;
+		transition: opacity .2s;
+	}
+	#control {
+		top: .6em;
+		display: none;
+		position: relative;
+		&::after {
+			position: relative;
+			text-align: right;
+			content: 'D';
+		}
 	}
 }
 
@@ -236,6 +281,7 @@ p, li {
 			}
 			& > a {
 				bottom: 0;
+				color: $maincolor;
 			}
 			&.full {
 				margin: 0;

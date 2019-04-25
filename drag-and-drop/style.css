@@ -35,14 +35,12 @@ body::after {
   right: 0;
   z-index: 45;
   opacity: 0;
-  -webkit-transition: opacity .3s;
   transition: opacity .3s;
   pointer-events: none;
 }
 
 body.solo::after {
   opacity: 1;
-  -webkit-transition: opacity .4s;
   transition: opacity .4s;
   pointer-events: all;
 }
@@ -55,7 +53,6 @@ a {
   position: absolute;
   top: 10em;
   left: 10em;
-  -webkit-transition: .2s;
   transition: .2s;
   z-index: 99;
 }
@@ -63,32 +60,71 @@ a {
 #handwrap.pickup #hand {
   background-image: url("/pixicons/fist.svg");
   background-position-y: .2rem;
-  -webkit-animation: unset;
-          animation: unset;
+  animation: unset;
 }
 
 #handwrap.point #hand {
   background-image: url("pixicons/pointing_finger.svg");
-  -webkit-animation: unset;
-          animation: unset;
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
+  animation: unset;
+  transform: rotate(0);
+}
+
+#handwrap.forbidden #forbidden {
+  opacity: 1;
+  transition: opacity 0;
+}
+
+#handwrap.edit #control {
+  display: block;
+  opacity: .8;
+  color: #4c6ab0;
+}
+
+#handwrap.writing #hand {
+  background-image: url("/pixicons/hourglass.svg");
+}
+
+#handwrap.writing #control::after {
+  content: 'ALT+A';
+  left: -3em;
+}
+
+#handwrap #hand, #handwrap #forbidden {
+  position: relative;
+  top: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #handwrap #hand {
-  position: relative;
-  top: 0;
   width: 2em;
   height: 2em;
   background-image: url("/pixicons/palm.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
-  -webkit-animation: breathe 3s ease-in-out infinite;
-          animation: breathe 3s ease-in-out infinite;
-  -webkit-transition: margin .2s;
+  transform: rotate(180deg);
+  animation: breathe 3s ease-in-out infinite;
   transition: margin .2s;
+}
+
+#handwrap #forbidden {
+  background-image: url("/pixicons/forbidden.svg");
+  width: 1.6em;
+  height: 1.6em;
+  top: -.6em;
+  left: .2em;
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+#handwrap #control {
+  top: .6em;
+  display: none;
+  position: relative;
+}
+
+#handwrap #control::after {
+  position: relative;
+  text-align: right;
+  content: 'D';
 }
 
 #explain {
@@ -100,12 +136,8 @@ a {
   bottom: 0;
   z-index: 10;
   overflow-y: scroll;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 #explain article {
@@ -136,24 +168,16 @@ a {
 }
 
 #kanban {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 1fr 1fr;
-      grid-template-columns: 1fr 1fr 1fr;
-  -ms-grid-rows: calc(100vh - 2.8rem) 2rem;
-      grid-template-rows: calc(100vh - 2.8rem) 2rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: calc(100vh - 2.8rem) 2rem;
   height: 100vh;
   grid-gap: .2rem;
 }
 
 #kanban > section {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   max-height: 100vh;
   background-color: #ebeef6;
 }
@@ -173,9 +197,7 @@ a {
 
 #kanban > section > section {
   overflow-y: scroll;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
 
 #kanban > footer {
@@ -184,15 +206,6 @@ a {
 
 #kanban > footer div {
   display: inline-block;
-}
-
-@-webkit-keyframes breathe {
-  25% {
-    top: .2rem;
-  }
-  75% {
-    top: -.2rem;
-  }
 }
 
 @keyframes breathe {
@@ -247,7 +260,6 @@ p .key, li .key {
   border-radius: 0 .3rem .3rem .3rem;
   padding: .4rem .6rem;
   margin: 1.4em 0 .2rem;
-  -webkit-transition: .4s;
   transition: .4s;
   font-weight: 300;
   position: relative;
@@ -278,6 +290,7 @@ p .key, li .key {
 
 .card.active.pickup > a {
   bottom: 0;
+  color: #4c6ab0;
 }
 
 .card.active.pickup.full {
@@ -338,7 +351,6 @@ p .key, li .key {
   font-size: .6em;
   text-align: center;
   overflow: hidden;
-  -webkit-transition: opacity .5s;
   transition: opacity .5s;
   color: rgba(76, 106, 176, 0.7);
   margin: 0;
@@ -355,7 +367,6 @@ p .key, li .key {
   position: relative;
   bottom: -.7em;
   color: white;
-  -webkit-transition: .2s;
   transition: .2s;
 }
 
@@ -438,4 +449,3 @@ input[type=submit] {
   text-align: right;
   font-size: 1.6em;
 }
-/*# sourceMappingURL=style.css.map */
