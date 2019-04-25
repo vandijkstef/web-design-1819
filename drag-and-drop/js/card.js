@@ -24,9 +24,9 @@ export default class Card {
 		console.log(this);
 		return UI.Wrap([
 			UI.CreateLink(this.label, `#card-${this.id}`),
-			UI.CreateText('E to open | X to remove', ['show-detail']),
+			// UI.CreateText('E to open | X to remove', ['show-detail']),
+			UI.CreateText('E to open', ['show-detail']),
 			UI.CreateForm([
-				// UI.CreateText('ESC or E to close'),
 				UI.CreateInputText(
 					UI.CreateLabel('Name'),
 					'label',
@@ -41,6 +41,7 @@ export default class Card {
 					false,
 					this.description
 				),
+				UI.CreateText('ESC or E to close'),
 			], '/', 'POST', ['details'], null)
 		], ['card'], `card-${this.id}`)
 	}
