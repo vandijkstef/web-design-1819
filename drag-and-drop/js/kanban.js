@@ -134,10 +134,10 @@ export default class Kanban {
 					break;
 				case 'c':
 					console.log('create card');
-					const newCard = new Card('new');
-					newCard.DOM.classList.add('edit');
-					newCard.DOM.classList.add('full');
-					document.body.appendChild(newCard.DOM);
+					// const newCard = new Card('new');
+					// newCard.DOM.classList.add('edit');
+					// newCard.DOM.classList.add('full');
+					// document.body.appendChild(newCard.DOM);
 					break;
 				case 'x':
 					console.log('erase card');
