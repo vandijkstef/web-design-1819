@@ -44,6 +44,9 @@ export default class Kanban {
 					if (this.hand.DOM.wrap.classList.contains('edit')) {
 						this.hand.DOM.wrap.classList.add('writing');
 						console.log('edit the label..', this.active);
+						requestAnimationFrame(() => {
+							this.hand.focusing.querySelector('input').focus();
+						});
 					} else {
 						this.moveRight();
 					}
@@ -53,6 +56,7 @@ export default class Kanban {
 					if (this.hand.DOM.wrap.classList.contains('writing')) {
 						if (keypress.alted) {
 							this.hand.DOM.wrap.classList.remove('writing');
+							this.hand.focusing.querySelector('input').blur();
 							console.log('store field changes');
 						}
 					} else {
@@ -82,7 +86,9 @@ export default class Kanban {
 								this.active.style.bottom = '5vh';
 								this.active.style.left = '5vw';
 								this.active.style.right = '5vw';
+								this.hand.DOM.wrap.classList.add('working');
 								setTimeout(() => {
+									this.hand.DOM.wrap.classList.remove('working');
 									this.hand.focusOn(document.querySelector('.card.full.edit label'), this.position);
 								}, 200);
 							});
@@ -95,6 +101,12 @@ export default class Kanban {
 							this.active.style.bottom = 'unset';
 							this.active.style.left = 'unset';
 							this.active.style.right = 'unset';
+							this.hand.DOM.wrap.classList.add('working');
+							this.hand.DOM.wrap.classList.remove('edit');
+							setTimeout(() => {
+								this.hand.DOM.wrap.classList.remove('working');
+								this.hand.focusOn(this.active);
+							}, 200);
 						}
 					}
 					break;
@@ -133,13 +145,19 @@ export default class Kanban {
 				case 'escape':
 					if (this.active && document.body.classList.contains('solo')) {
 						document.body.classList.remove('solo');
-						this.active.classList.remove('full');
-						this.active.classList.remove('edit');
-						this.position.scope = 'kanban';
-						this.active.style.top = 'unset';
-						this.active.style.bottom = 'unset';
-						this.active.style.left = 'unset';
-						this.active.style.right = 'unset';
+							this.active.classList.remove('full');
+							this.active.classList.remove('edit');
+							this.position.scope = 'kanban';
+							this.active.style.top = 'unset';
+							this.active.style.bottom = 'unset';
+							this.active.style.left = 'unset';
+							this.active.style.right = 'unset';
+							this.hand.DOM.wrap.classList.add('working');
+							this.hand.DOM.wrap.classList.remove('edit');
+							setTimeout(() => {
+								this.hand.DOM.wrap.classList.remove('working');
+								this.hand.focusOn(this.active);
+							}, 200);
 					}
 					// TODO: Redo escape
 					// if (this.active && this.active.classList.contains('pickup')) {
@@ -238,7 +256,15 @@ export default class Kanban {
 				}
 			}
 		} else if (this.active.classList.contains('edit')) {
-			console.log('move in edit')
+			if (!this.hand.DOM.wrap.classList.contains('writing')) {
+				const inputs = document.querySelectorAll('.active label');
+				if (inputs[posY]) {
+					this.position.y = posY;
+				} else {
+					this.hand.forbidden();
+				}
+				this.hand.focusOn(inputs[this.position.y], this.position);
+			}
 		} else {
 			console.warn('CASE SHOULD NOT BE REACHABLE');
 		}
