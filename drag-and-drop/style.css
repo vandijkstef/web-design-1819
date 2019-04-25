@@ -89,6 +89,10 @@ a {
   left: -3em;
 }
 
+#handwrap.working #hand {
+  background-image: url("/pixicons/stars.svg");
+}
+
 #handwrap #hand, #handwrap #forbidden {
   position: relative;
   top: 0;
@@ -170,7 +174,7 @@ a {
 #kanban {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: calc(100vh - 2.8rem) 2rem;
+  grid-template-rows: 100vh;
   height: 100vh;
   grid-gap: .2rem;
 }
@@ -443,9 +447,5 @@ textarea {
 }
 
 input[type=submit] {
-  background-color: white;
-  color: #4c6ab0;
-  padding: .4rem .6rem;
-  text-align: right;
-  font-size: 1.6em;
+  display: none;
 }
