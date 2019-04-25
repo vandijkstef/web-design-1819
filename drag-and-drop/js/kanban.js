@@ -27,7 +27,7 @@ export default class Kanban {
 				repeat: e.repeat
 			}
 			// Ignore OS-created repeats
-			if (keypress.repeat || document.body.classList.contains('unexplained') && keypress.key != ' ') {
+			if (keypress.repeat || document.body.classList.contains('unexplained') && keypress.key != ' ' || document.activeElement.tagName.toLowerCase() === 'input' && keypress.key != 'a') {
 				return;
 			}
 
@@ -44,8 +44,10 @@ export default class Kanban {
 					if (this.hand.DOM.wrap.classList.contains('edit')) {
 						this.hand.DOM.wrap.classList.add('writing');
 						console.log('edit the label..', this.active);
+						const input = this.hand.focusing.querySelector('input');
+						input.dataset.curValue = input.value;
 						requestAnimationFrame(() => {
-							this.hand.focusing.querySelector('input').focus();
+							input.focus();
 						});
 					} else {
 						this.moveRight();
@@ -54,10 +56,29 @@ export default class Kanban {
 				case 'a':
 				case 'arrowleft':
 					if (this.hand.DOM.wrap.classList.contains('writing')) {
-						if (keypress.alted) {
+						if (keypress.controlled) {
+							const input = this.hand.focusing.querySelector('input');
 							this.hand.DOM.wrap.classList.remove('writing');
-							this.hand.focusing.querySelector('input').blur();
-							console.log('store field changes');
+							input.blur();
+
+							const dataId = this.active.id.split('-')[1];
+							const data = JSON.parse(localStorage.getItem('kanbandata'));
+							const entry = data.cards.find((entry) => {
+								if (entry.id === parseInt(dataId)) {
+									return true;
+								} else {
+									return false;
+								}
+							});
+							
+							entry[input.name] = input.value;
+
+							if (input.name === 'label') {
+								this.active.querySelector('a').innerText = input.value;
+							}
+
+							localStorage.setItem('kanbandata', JSON.stringify(data));
+
 						}
 					} else {
 						this.moveLeft();
@@ -77,6 +98,7 @@ export default class Kanban {
 						if (!this.active.classList.contains('full')) {
 							this.active.classList.add('full');
 							this.position.scope = 'solo';
+							this.position.y = 0;
 							this.active.style.top = pos.y + 'px';
 							this.active.style.left = pos.x + 'px';
 							requestAnimationFrame(() => {
@@ -90,7 +112,7 @@ export default class Kanban {
 								setTimeout(() => {
 									this.hand.DOM.wrap.classList.remove('working');
 									this.hand.focusOn(document.querySelector('.card.full.edit label'), this.position);
-								}, 200);
+								}, 400);
 							});
 						} else {
 							document.body.classList.remove('solo');
@@ -112,10 +134,10 @@ export default class Kanban {
 					break;
 				case 'c':
 					console.log('create card');
-					const newCard = new Card('new');
-					newCard.DOM.classList.add('edit');
-					newCard.DOM.classList.add('full');
-					document.body.appendChild(newCard.DOM);
+					// const newCard = new Card('new');
+					// newCard.DOM.classList.add('edit');
+					// newCard.DOM.classList.add('full');
+					// document.body.appendChild(newCard.DOM);
 					break;
 				case 'x':
 					console.log('erase card');
@@ -130,9 +152,11 @@ export default class Kanban {
 				case ' ':
 					if (this.active && this.active.classList.contains('card')) {
 						if (this.active.classList.contains('pickup')) {
-							this.active.classList.remove('pickup');
-							this.active.classList.remove('edit');
-							this.hand.DOM.wrap.classList.remove('pickup');
+							if (!this.active.classList.contains('full')) {
+								this.active.classList.remove('pickup');
+								this.active.classList.remove('edit');
+								this.hand.DOM.wrap.classList.remove('pickup');
+							}
 						} else {
 							this.active.classList.add('pickup');
 							this.hand.DOM.wrap.classList.add('pickup');
@@ -263,6 +287,7 @@ export default class Kanban {
 				} else {
 					this.hand.forbidden();
 				}
+				console.log(this.position.y);
 				this.hand.focusOn(inputs[this.position.y], this.position);
 			}
 		} else {
