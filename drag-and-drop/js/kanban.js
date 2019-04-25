@@ -41,11 +41,23 @@ export default class Kanban {
 			switch(keypress.key) {
 				case 'd':
 				case 'arrowright':
-					this.moveRight();
+					if (this.hand.DOM.wrap.classList.contains('edit')) {
+						this.hand.DOM.wrap.classList.add('writing');
+						console.log('edit the label..', this.active);
+					} else {
+						this.moveRight();
+					}
 					break;
 				case 'a':
 				case 'arrowleft':
-					this.moveLeft();
+					if (this.hand.DOM.wrap.classList.contains('writing')) {
+						if (keypress.alted) {
+							this.hand.DOM.wrap.classList.remove('writing');
+							console.log('store field changes');
+						}
+					} else {
+						this.moveLeft();
+					}
 					break;
 				case 'w':
 				case 'arrowup':
@@ -70,6 +82,9 @@ export default class Kanban {
 								this.active.style.bottom = '5vh';
 								this.active.style.left = '5vw';
 								this.active.style.right = '5vw';
+								setTimeout(() => {
+									this.hand.focusOn(document.querySelector('.card.full.edit label'), this.position);
+								}, 200);
 							});
 						} else {
 							document.body.classList.remove('solo');
@@ -82,7 +97,6 @@ export default class Kanban {
 							this.active.style.right = 'unset';
 						}
 					}
-					console.log(this.position);
 					break;
 				case 'c':
 					console.log('create card');
@@ -117,6 +131,16 @@ export default class Kanban {
 					// TODO: Decide tab key use?
 					break;
 				case 'escape':
+					if (this.active && document.body.classList.contains('solo')) {
+						document.body.classList.remove('solo');
+						this.active.classList.remove('full');
+						this.active.classList.remove('edit');
+						this.position.scope = 'kanban';
+						this.active.style.top = 'unset';
+						this.active.style.bottom = 'unset';
+						this.active.style.left = 'unset';
+						this.active.style.right = 'unset';
+					}
 					// TODO: Redo escape
 					// if (this.active && this.active.classList.contains('pickup')) {
 					// 	this.active.classList.remove('pickup');
@@ -181,17 +205,8 @@ export default class Kanban {
 			let newActive;
 			if (this.position.scope === 'kanban') {
 				newActive = this.columns[this.position.x].cards[this.position.y];
-				
 			}
-			if (this.position.scope === 'footer' || !newActive) {
-				if (!newActive) {
-					this.position.scope = 'footer';
-				}
-				newActive = this.footer[this.position.x];
-			} 
-			if (!newActive) {
-				console.warn('scope not implemented', this.position.scope);
-			}
+
 			
 			if (newActive) {
 				this.active = newActive;
@@ -200,6 +215,7 @@ export default class Kanban {
 				this.hand.focusOn(this.active);
 			} else {
 				console.log('Couldn\'t perform move');
+				this.hand.forbidden();
 			}
 		} else if (this.active.classList.contains('pickup') && !this.active.classList.contains('edit')) {
 			if (posY === this.columns[posX].cards.length - 1) {
@@ -234,21 +250,13 @@ export default class Kanban {
 		let newPosX = this.position.x - 1;
 		let newPosY = this.position.y;
 
-		let compare;
-		if (this.position.scope === 'kanban') {
-			compare = this.columns.length - 1;
-		} else if (this.position.scope === 'footer') {
-			compare = this.footer.length - 1;
-		}
+		const compare = this.columns.length - 1;
 		if (newPosX < 0) {
 			newPosX = 0;
-			console.log('debounce left', this.position.scope);
+			this.hand.forbidden();
 		}
-		if (this.position.scope === 'kanban') {
-			if (newPosY > this.columns[newPosX].cards.length - 1) {
-				newPosY = this.columns[newPosX].cards.length - 1;
-				console.log('upbounce');
-			}
+		if (newPosY > this.columns[newPosX].cards.length - 1) {
+			newPosY = this.columns[newPosX].cards.length - 1;
 		}
 
 		this.doMove(newPosX, newPosY);
@@ -257,21 +265,14 @@ export default class Kanban {
 		let newPosX = this.position.x + 1;
 		let newPosY = this.position.y;
 
-		let compare;
-		if (this.position.scope === 'kanban') {
-			compare = this.columns.length - 1;
-		} else if (this.position.scope === 'footer') {
-			compare = this.footer.length - 1;
-		}
+		const compare = this.columns.length - 1;
+		
 		if (newPosX > compare) {
 			newPosX = compare;
-			console.log('debounce right', this.position.scope);
+			this.hand.forbidden();
 		}
-		if (this.position.scope === 'kanban') {
-			if (newPosY > this.columns[newPosX].cards.length - 1) {
-				newPosY = this.columns[newPosX].cards.length - 1;
-				console.log('upbounce kanban right');
-			}
+		if (newPosY > this.columns[newPosX].cards.length - 1) {
+			newPosY = this.columns[newPosX].cards.length - 1;
 		}
 
 		this.doMove(newPosX, newPosY);
@@ -286,7 +287,7 @@ export default class Kanban {
 				this.position.scope = 'kanban';
 				newPosY = this.columns[0].cards.length - 1;
 			} else {
-				console.log('debounce up');
+				this.hand.forbidden();
 			}
 		}
 		this.doMove(newPosX, newPosY);
@@ -294,22 +295,10 @@ export default class Kanban {
 	moveDown() {
 		let newPosX = this.position.x;
 		let newPosY = this.position.y + 1;
-		if (this.position.scope === 'kanban') {
-			if (newPosY > this.columns[newPosX].cards.length) {
-				if (this.active && this.active.classList.contains('pickup')) {
-					this.doMove(newPosX, this.columns[newPosX].cards.length - 1);
-				} else {
-					this.position.scope = 'footer';
-					if (newPosX > this.footer.length - 1) {
-						newPosX = this.footer.length - 1;
-					}
-					this.doMove(newPosX, 0);
-				}
-			} else {
-				this.doMove(newPosX, newPosY);
-			}
-		} else if (this.position.scope === 'footer') {
-			this.doMove(newPosX, 0);
+		if (newPosY > this.columns[newPosX].cards.length) {
+			this.doMove(newPosX, this.columns[newPosX].cards.length - 1);
+		} else {
+			this.doMove(newPosX, newPosY);
 		}
 	}
 
