@@ -34,7 +34,7 @@ export default class Kanban {
 			if (document.body.classList.contains('unexplained') && keypress.key == ' ') {
 				document.body.classList.remove('unexplained');
 				console.log('explainish');
-				return
+				return;
 			}
 
 			// Handle it!
