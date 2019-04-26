@@ -105,5 +105,11 @@ Other:
 - Actually store/apply changes
 - Create new card!
 
+- Enter toets danwel tab ipv ctrl A
+- Hotkey heel duidelijk, ging er meteen mee spelen
+- Geluidjes?!
+
+
+
 
 ☕
