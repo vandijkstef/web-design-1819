@@ -34,11 +34,29 @@ export default class Kanban {
 			if (document.body.classList.contains('unexplained') && keypress.key == ' ') {
 				document.body.classList.remove('unexplained');
 				console.log('explainish');
-				return
+				return;
 			}
 
 			// Handle it!
 			switch(keypress.key) {
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+					if (this.position.scope === 'kanban') {
+						const hotCard = document.querySelector('[data-hotkey="' + keypress.key + '"]');
+						if (hotCard) {
+							this.hand.focusOn(hotCard);
+							this.position.x = hotCard.dataset.x;
+							this.position.y = hotCard.dataset.y
+						}
+					}
+					break;
 				case 'd':
 				case 'arrowright':
 					if (this.hand.DOM.wrap.classList.contains('edit')) {
@@ -75,6 +93,11 @@ export default class Kanban {
 
 							if (input.name === 'label') {
 								this.active.querySelector('a').innerText = input.value;
+							}
+
+							if (input.name === 'hotkey') {
+								this.active.querySelector('.hotkey').innerText = input.value;
+								this.active.dataset.hotkey = input.value;
 							}
 
 							localStorage.setItem('kanbandata', JSON.stringify(data));
